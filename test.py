@@ -1,17 +1,16 @@
 import cv2
-import numpy as np
-import matplotlib.pyplot as plt
+import re
 
-img = np.zeros(shape=(500,500))
+constr = "('IAAB01_Step_1_1','==',5) and ('IAAB01_Step_1_1','==',6)"
 
-def draw_circle(event,x,y,flags,params):
-    if event == cv2.EVENT_LBUTTONDOWN:
-        cv2.circle(img,(x,y),100,color=(255,0,0), thickness=-1)
+pattern = "\([^()]*\)"
 
-cv2.namedWindow(winname="drawing")
-cv2.setMouseCallback("drawing",draw_circle)
-while True:
-    cv2.imshow("drawing",img)
-    if cv2.waitKey(20) & 0xFF == ord("r"): 
-        break
-cv2.destroyAllWindows()
+a = re.findall(pattern, constr)
+for aa in a:
+    aa = aa.lstrip("(")
+    aa = aa.rstrip(")")
+    vals = aa.split(",")
+    print(vals)
+
+
+
